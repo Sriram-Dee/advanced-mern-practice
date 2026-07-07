@@ -1,61 +1,71 @@
-# Advanced MERN Stack Practice
+# ⚙️ Backend Services - Advanced MERN Stack Practice
 
-Welcome to the **Advanced MERN Stack Practice** repository! This project is designed as a structured learning environment to master advanced MERN (MongoDB, Express, React, Node.js) Stack concepts.
+This branch holds the backend services and mock databases of the MERN Stack practice project.
 
-To keep the repository clean and modular, the codebase is organized using a **branch-per-tier** architecture, allowing you to practice frontend and backend development in isolation while maintaining clear separation of concerns.
-
----
-
-## 📂 Repository Structure & Branches
-
-This repository is split into two primary branches representing the frontend and backend of the application:
-
-### 1. 🖥️ `frontend` Branch
-Contains advanced React & Redux state management patterns.
-* **Key Features**:
-  * **RTK-Query Application**: Demonstrates declarative data fetching, caching, synchronization, and state management using Redux Toolkit Query.
-  * **asyncThunk Application**: Demonstrates handling asynchronous operations, side-effects, and custom lifecycle actions with `createAsyncThunk`.
-* **To check out the frontend**:
-  ```bash
-  git checkout frontend
-  ```
-
-### 2. ⚙️ `backend` Branch
-Prepared for the server-side architecture and databases.
-* **Key Features**:
-  * **Products mock API (JSON Server)**: Serves mock data on port `3000` via `npx json-server --watch db.json --port 3000`.
-  * **Express/Node.js Server**: Ready to integrate full backend capabilities (including authentication, routing, and MongoDB connectivity).
-* **To check out the backend**:
-  ```bash
-  git checkout backend
-  ```
+The backend is architected to support two distinct components:
+1. **Mock Products API**: Run using **JSON Server** to handle product catalog queries and modifications on port `3000`.
+2. **Core Authentication & Business Logic (Express/Node.js)**: Designed to handle authentications, user management, and other secure API logic. (Backend files will be added here).
 
 ---
 
-## 🚀 How to Get Started
+## 📦 1. Mock Products API Setup (JSON Server)
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/Sriram-Dee/advanced-mern-practice.git
-   cd advanced-mern-practice
-   ```
+For rapid development and practicing advanced data queries (such as RTK Query pagination, filtering, and caching), the products database is mocked using `json-server`.
 
-2. **Explore the Frontend**:
-   Switch to the `frontend` branch to view, install, and run the React applications:
-   ```bash
-   git checkout frontend
-   ```
+### Running the Products Server
+You do not need to install `json-server` globally. You can run it directly using `npx`:
 
-3. **Explore the Backend**:
-   Switch to the `backend` branch to view backend specifications and run the mock products database:
+```bash
+npx json-server --watch db.json --port 3000
+```
+
+* **Database File**: `db.json` (will contain the product items schema).
+* **Port**: `3000`
+* **Resource Endpoint**: `http://localhost:3000/products`
+
+### Mock Product Data Schema
+The products API will expect a schema structured as follows:
+```json
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Fjallraven - Foldsack No. 1 Backpack",
+      "price": 109.95,
+      "description": "Your perfect pack for everyday use and walks in the forest.",
+      "category": "men's clothing",
+      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+      "rating": {
+        "rate": 3.9,
+        "count": 120
+      }
+    }
+  ]
+}
+```
+
+---
+
+## 🔐 2. Future Express.js & MongoDB Integration
+
+This branch is prepared for the addition of a custom Express backend. The planned architecture is:
+
+* **Authentication Endpoint**: Express application running on port `5000` (or configured via environment variables) handling user signup, login, JWT token generation, and secure routes.
+* **Database**: MongoDB integration using Mongoose for schemas and database operations.
+* **API Gateway/Routing**: The frontend will interact with the Express backend for authentication and with the JSON-server (or a unified Express route proxying to JSON-server) for catalog data.
+
+---
+
+## 🚀 How to Run the Backend
+
+1. **Checkout the backend branch**:
    ```bash
    git checkout backend
    ```
-
----
-
-## 🛠️ Technology Stack & Tools Used
-* **Frontend**: React.js, Vite, Redux Toolkit (RTK-Query & Async Thunks)
-* **Backend Utilities**: JSON Server (for rapid mockup API testing), Node.js, Express.js (upcoming integration)
-
-Enjoy practicing advanced MERN stack concepts! 🚀
+2. **Start the JSON Server**:
+   Ensure you have your `db.json` file in the root of the directory, then run:
+   ```bash
+   npx json-server --watch db.json --port 3000
+   ```
+3. **Verify running endpoints**:
+   Open `http://localhost:3000/products` in your browser.
