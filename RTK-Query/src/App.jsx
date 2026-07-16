@@ -12,14 +12,24 @@ import ProductsPage from "./pages/ProductsPage";
 import PostsPage from "./pages/PostsPage";
 import PostDetails from "./components/PostDetails";
 import Login from "./pages/Login";
-import { logout, selectIsAuthenticated } from "./features/slice/auth";
-import { useDispatch, useSelector } from "react-redux";
+import {selectIsAuthenticated } from "./features/slice/auth";
+import { useSelector } from "react-redux";
+import { useLogoutUserMutation } from "./features/api/usersApi";
+import useAuthInit from "./hooks/useAuthInit";
 
 const App = () => {
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(logout());
+
+  const [logoutUser] = useLogoutUserMutation();
+
+  const handleLogout = async () => {
+    await logoutUser();
   };
+
+  const loading = useAuthInit();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <BrowserRouter>

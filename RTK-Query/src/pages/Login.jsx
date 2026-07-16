@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     try {
       user = await loginUser(loginForm).unwrap();
-      navigate("/posts");
+      navigate("/posts", { replace: true });
     } catch (err) {
       console.log(err);
     }

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { login, logout } from "../slice/auth";
-import baseQuery from "./baseQuery";
+import baseQueryWithReauth from "./baseQuery";
 
 // const baseQuery = fetchBaseQuery({
 //   baseUrl: "http://localhost:8000/api",
@@ -19,7 +19,7 @@ import baseQuery from "./baseQuery";
 
 const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery,
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUsers: builder.query({
@@ -69,8 +69,15 @@ const usersApi = createApi({
         }
       },
     }),
+    refreshToken: builder.mutation({
+      query: () => ({
+        url: "/auth/refresh",
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useLoginUserMutation } = usersApi;
+export const { useGetUsersQuery, useLoginUserMutation, useLogoutUserMutation, useRefreshTokenMutation} = usersApi;
 export default usersApi;
