@@ -125,7 +125,16 @@ export const refreshToken = async (req, res) => {
       return res.status(403).json({ message: "Invalid token" });
 
     const accessToken = generateAccessToken(user);
-    return res.status(200).json({ accessToken });
+    return res.status(200).json({
+      user: {
+        _id: user._id,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      accessToken,
+    });
   } catch (err) {
     if (err.name === "TokenExpiredError")
       return res.status(401).json({ message: "Token expired" });
@@ -146,5 +155,5 @@ export const logout = async (req, res) => {
   user.refreshToken = "";
   await user.save();
   res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict", secure: false });
-  res.sendStatus(200);
+  res.status(200).json({ message: "Logged out successfully" });
 };
